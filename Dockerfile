@@ -1,7 +1,7 @@
 # Usa una imagen de Ubuntu
 FROM ubuntu:22.04
 
-RUN apt update
+RUN apt-get update || apt-get update || apt-get update
 
 RUN apt install -y unzip wget openjdk-11-jre
 
