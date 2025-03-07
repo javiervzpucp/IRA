@@ -1,8 +1,9 @@
 # Usa una imagen de Ubuntu
 FROM ubuntu:latest
 
-# Instala dependencias necesarias
-RUN apt update && apt install -y unzip wget openjdk-11-jre
+RUN apt update
+
+RUN apt install -y unzip wget openjdk-11-jre
 
 # Descarga GraphDB Free
 RUN wget https://download.ontotext.com/graphdb/GraphDB-Free-10.0.1.zip && \
