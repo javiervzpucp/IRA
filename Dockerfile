@@ -1,10 +1,10 @@
-# Usa una imagen base más ligera y estable
+# Usa una imagen base más ligera para evitar errores en Railway
 FROM debian:bullseye-slim
 
-# Eliminar la caché de APT y forzar reintentos
+# Eliminar la caché de APT para evitar problemas de bloqueo
 RUN rm -rf /var/lib/apt/lists/*
 
-# Forzar timeout para evitar cortes en Railway
+# Forzar timeout y reintentos en apt-get update para evitar cancelaciones
 RUN timeout 300 apt-get update -o Acquire::Retries=3
 
 # Instalar dependencias necesarias
@@ -13,11 +13,8 @@ RUN apt-get install -y unzip wget openjdk-11-jre
 # Crear la carpeta de GraphDB
 RUN mkdir -p /opt/graphdb
 
-# Descargar y extraer GraphDB Free
-RUN wget https://download.ontotext.com/graphdb/GraphDB-Free-10.0.1.zip -O /opt/graphdb.zip && \
-    unzip /opt/graphdb.zip -d /opt/ && \
-    mv /opt/GraphDB-Free-10.0.1 /opt/graphdb && \
-    rm /opt/graphdb.zip
+# Copiar GraphDB desde GitHub en lugar de descargarlo
+COPY GraphDB-Free-10.X.X /opt/graphdb
 
 # Expone el puerto de GraphDB
 EXPOSE 7200
